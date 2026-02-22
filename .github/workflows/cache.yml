@@ -1,0 +1,25 @@
+name: Cache Test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-d3e7c99
+
+      - name: prime-cache-d3e7c99
+        run: echo "Cache hit = ${{ steps.cache.outputs.cache-hit }}"
+
+      - name: Install deps
+        run: pip install requests
